@@ -1,25 +1,26 @@
 const express = require('express')
 const router = express.Router()
-const singupTemplateCopy = require('../models/SigUpModels')
-const { request } = require('express')
+const singUpTemplateCopy = require('../models/SignUpModels')
 
 
 
-router.post('/signup', (req, res) => {
-    const signedUpUser = new singupTemplateCopy({
 
-        fullName: request.body.fullName,
-        username: request.body.username,
-        email: request.body.email,
-        password: request.body.password
+router.post('/signup', async (req, res) => {
+
+    const signedUpUser = new singUpTemplateCopy({
+        fullName: req.body.fullName,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
     })
-    signUpUser.save()
-        .then(data => {
-            res.json(data)
-        })
-        .catch(error => {
-            res.json(error)
-        })
+    try {
+        const postsave = await signedUpUser.save()
+        res.json(postsave)
+    } catch (err) {
+        res.json({ message: "Please Fix this issues" })
+    }
+
+
 })
 
 module.exports = router; 
