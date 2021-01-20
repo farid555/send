@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const singUpTemplateCopy = require('../models/SignUpModels')
+const bcrypt = require('bcrypt')
 
-const joi = require('@hapi/joi')
-const Joi = require('@hapi/joi')
 
 
 //VALIDITION
@@ -12,13 +11,16 @@ const Joi = require('@hapi/joi')
 
 router.post('/signup', async (req, res) => {
 
+    const saltPassword = await bcrypt.genSalt(10)
+    const securePassword = await bcrypt.hash(req.body.password, saltPassword)
+
     //LETS VALIDATE THE DATA BEFORE WE A USER
 
     const signedUpUser = new singUpTemplateCopy({
         fullName: req.body.fullName,
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password
+        password: securePassword
     })
     try {
         const postsave = await signedUpUser.save()
