@@ -2,10 +2,17 @@ const express = require('express')
 const router = express.Router()
 const singUpTemplateCopy = require('../models/SignUpModels')
 
+const joi = require('@hapi/joi')
+const Joi = require('@hapi/joi')
+
+
+//VALIDITION
 
 
 
 router.post('/signup', async (req, res) => {
+
+    //LETS VALIDATE THE DATA BEFORE WE A USER
 
     const signedUpUser = new singUpTemplateCopy({
         fullName: req.body.fullName,
@@ -15,9 +22,9 @@ router.post('/signup', async (req, res) => {
     })
     try {
         const postsave = await signedUpUser.save()
-        res.json(postsave)
+        res.send(postsave)
     } catch (err) {
-        res.json({ message: "Please Fix this issues" })
+        res.status(400).send(err)
     }
 
 
