@@ -1,9 +1,10 @@
 import React, { Component } from 'react' //class based component
-import "bootstrap/dist/css/bootstrap.min.css"
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios'
 import { Container } from 'react-bootstrap'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Card from './Cads/Cards'
 
 class App extends Component {
     constructor() {
@@ -74,6 +75,7 @@ class App extends Component {
 
                 <Container>
                     <Header />
+                    <Card />
                 </Container>
                 <main className='py-3'>
                     <div className='container'>
